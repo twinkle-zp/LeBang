@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.plat.dao.MessageMapper" >
+  <resultMap id="BaseResultMap" type="com.plat.entity.Message" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="sell_id" property="sellId" jdbcType="INTEGER" />
+    <result column="buy_id" property="buyId" jdbcType="INTEGER" />
+    <result column="good_id" property="goodId" jdbcType="INTEGER" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="date" property="date" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, sell_id, buy_id, good_id, content, date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from message
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from message
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.plat.entity.Message" >
+    insert into message (id, sell_id, buy_id, 
+      good_id, content, date
+      )
+    values (#{id,jdbcType=INTEGER}, #{sellId,jdbcType=INTEGER}, #{buyId,jdbcType=INTEGER}, 
+      #{goodId,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, #{date,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.plat.entity.Message" >
+    insert into message
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="sellId != null" >
+        sell_id,
+      </if>
+      <if test="buyId != null" >
+        buy_id,
+      </if>
+      <if test="goodId != null" >
+        good_id,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="date != null" >
+        date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="sellId != null" >
+        #{sellId,jdbcType=INTEGER},
+      </if>
+      <if test="buyId != null" >
+        #{buyId,jdbcType=INTEGER},
+      </if>
+      <if test="goodId != null" >
+        #{goodId,jdbcType=INTEGER},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null" >
+        #{date,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.plat.entity.Message" >
+    update message
+    <set >
+      <if test="sellId != null" >
+        sell_id = #{sellId,jdbcType=INTEGER},
+      </if>
+      <if test="buyId != null" >
+        buy_id = #{buyId,jdbcType=INTEGER},
+      </if>
+      <if test="goodId != null" >
+        good_id = #{goodId,jdbcType=INTEGER},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null" >
+        date = #{date,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.plat.entity.Message" >
+    update message
+    set sell_id = #{sellId,jdbcType=INTEGER},
+      buy_id = #{buyId,jdbcType=INTEGER},
+      good_id = #{goodId,jdbcType=INTEGER},
+      content = #{content,jdbcType=VARCHAR},
+      date = #{date,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
