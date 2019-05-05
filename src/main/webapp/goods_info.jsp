@@ -102,7 +102,7 @@
 						<!-- Product Size -->
 						<div class="product_size_container">
 							<span></span>
-							<div class="button cart_button"><a href="#">联系卖家</a></div>
+							<div class="button cart_button"><a href="goods/contact?id=${goods.id}">联系卖家</a></div>
 						</div>
 					</div>
 				</div>

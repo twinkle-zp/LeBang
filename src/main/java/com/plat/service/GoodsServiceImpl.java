@@ -1,7 +1,9 @@
 package com.plat.service;
 
 import com.plat.dao.GoodsMapper;
+import com.plat.dao.MessageMapper;
 import com.plat.entity.Goods;
+import com.plat.entity.Message;
 import com.plat.entity.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,9 @@ public class GoodsServiceImpl implements GoodsService {
 
     @Autowired
     private GoodsMapper goodsMapper;
+
+    @Autowired
+    private MessageMapper messageMapper;
 
     public void add(Goods goods) {
 
@@ -52,5 +57,9 @@ public class GoodsServiceImpl implements GoodsService {
 
     public Goods findById(Integer id) {
         return goodsMapper.selectByPrimaryKey(id);
+    }
+
+    public List<Message> findMessage(Integer goodId,Integer userId) {
+        return messageMapper.findList(goodId,userId);
     }
 }

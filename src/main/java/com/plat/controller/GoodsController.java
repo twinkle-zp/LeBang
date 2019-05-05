@@ -1,6 +1,7 @@
 package com.plat.controller;
 
 import com.plat.entity.Goods;
+import com.plat.entity.Message;
 import com.plat.entity.Page;
 import com.plat.entity.User;
 import com.plat.service.GoodsService;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 @Controller
 @RequestMapping("/goods")
@@ -75,5 +77,15 @@ public class GoodsController {
         return "goods_info";
     }
 
+    @RequestMapping("/contact")
+    public String contact(HttpServletRequest request, HttpServletResponse response, Model model){
+
+        String goodId = request.getParameter("id");
+        User user = (User)request.getSession().getAttribute("user");//获取当前用户
+        List<Message> list = goodsService.findMessage(Integer.valueOf(goodId),user.getUid());
+        request.setAttribute("userId",user.getUid());
+        request.setAttribute("message",list);
+        return "contact";
+    }
 
 }
