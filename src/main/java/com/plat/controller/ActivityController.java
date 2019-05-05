@@ -1,10 +1,7 @@
 package com.plat.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.plat.entity.Activity;
-import com.plat.entity.ActivityCategory;
-import com.plat.entity.Goods;
-import com.plat.entity.User;
+import com.plat.entity.*;
 import com.plat.service.ActivityService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +23,13 @@ public class ActivityController {
     @Autowired
     private ActivityService activityService;
 
+    /**
+     * ajax查找活动类别返回json至前端
+     * @param request
+     * @param response
+     * @param model
+     * @throws IOException
+     */
     @RequestMapping("/findCategory")
     public void findCategory(HttpServletRequest request, HttpServletResponse response, Model model) throws IOException {
         List<ActivityCategory> categoryList = activityService.findAll();
@@ -50,6 +54,22 @@ public class ActivityController {
         activity.setName(name);
         activity.setContent(content);
         activityService.add(activity);
-        return null;
+        return "redirect:/activity/findList";
+    }
+
+    /**
+     * 查找所有活动分页显示
+     * @param request
+     * @param response
+     * @param model
+     * @return
+     */
+    @RequestMapping("/findList")
+    public String findList(HttpServletRequest request, HttpServletResponse response, Model model){
+        String currPage = request.getParameter("currPage");//获取当前页
+        Page page = activityService.findList(currPage);
+        request.setAttribute("page",page);
+        return "activity";
+
     }
 }

@@ -13,9 +13,9 @@
         <div class="logo"><a href="#">LeBang</a></div>
         <nav class="main_nav">
             <ul>
-                <li><a href="index.html">二手交易</a></li>
+                <li><a href="goods/findGoodList">二手交易</a></li>
                 <li><a href="goods.jsp">交通互助</a></li>
-                <li><a href="goods.jsp">活动发布</a></li>
+                <li><a href="activity/findList">活动发布</a></li>
                 <li><a href="goods.jsp">代办事物</a></li>
                 <li><a href="Register.jsp">资源共享</a></li>
             </ul>

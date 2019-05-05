@@ -12,7 +12,7 @@
     <result column="content" property="content" jdbcType="LONGVARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, uid, cid, name, address
+    id, uid, cid, name, address,content
   </sql>
   <sql id="Blob_Column_List" >
     content
@@ -118,4 +118,12 @@
       address = #{address,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="getTotalCount" resultType="int">
+    select count(id) from activity
+  </select>
+
+  <select id="findPage" resultType="com.plat.entity.Activity" parameterType="object">
+    select <include refid="Base_Column_List" /> from activity limit #{param1},#{param2}
+  </select>
 </mapper>
