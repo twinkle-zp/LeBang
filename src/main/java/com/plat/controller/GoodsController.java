@@ -62,6 +62,8 @@ public class GoodsController {
         Page page = goodsService.findList(currPage);
         request.setAttribute("page",page);
         //model.addAttribute("page",page);
+        User user = (User)request.getSession().getAttribute("user");
+        request.setAttribute("userId",String.valueOf(user.getUid()));
         return "goods";
     }
 
@@ -77,6 +79,46 @@ public class GoodsController {
         return "goods_info";
     }
 
+    /**
+     * 获取当前用户的商品
+     * @param request
+     * @param response
+     * @param model
+     * @return
+     */
+    @RequestMapping("/myGoods")
+    public String myGoods(HttpServletRequest request, HttpServletResponse response, Model model){
+
+        String currPage = request.getParameter("currPage");
+        User user = (User)request.getSession().getAttribute("user");
+        Page page = goodsService.findMyGoods(currPage,user.getUid());
+        request.setAttribute("page",page);
+        //model.addAttribute("page",page);
+
+        request.setAttribute("userId",String.valueOf(user.getUid()));
+        return "goods";
+    }
+
+    /**
+     * 下架商品
+     * @param request
+     * @param response
+     * @param model
+     * @return
+     */
+    @RequestMapping("/delete")
+    public String delete(HttpServletRequest request, HttpServletResponse response, Model model){
+        String id = request.getParameter("id");
+        goodsService.delete(Integer.valueOf(id));
+        return "redirect:/goods/myGoods";
+    }
+    /**
+     * 获取两个用户之间所有留言消息
+     * @param request
+     * @param response
+     * @param model
+     * @return
+     */
     @RequestMapping("/contact")
     public String contact(HttpServletRequest request, HttpServletResponse response, Model model){
 
@@ -85,7 +127,39 @@ public class GoodsController {
         List<Message> list = goodsService.findMessage(Integer.valueOf(goodId),user.getUid());
         request.setAttribute("userId",user.getUid());
         request.setAttribute("message",list);
+        request.setAttribute("goodId",goodId);
         return "contact";
+    }
+
+    /**
+     * 用户留言
+     * @param request
+     * @param response
+     * @param model
+     * @return
+     */
+    @RequestMapping("/addMessage")
+    public String addMessage(HttpServletRequest request, HttpServletResponse response, Model model){
+        String message = request.getParameter("message");
+        String goodId = request.getParameter("goodId");
+        String toId = request.getParameter("toId");
+        String fromId = request.getParameter("fromId");
+        User user = (User)request.getSession().getAttribute("user");
+        Integer userId = user.getUid();//获取当前用户ID
+        Message message1 = new Message();
+        message1.setContent(message);
+        message1.setFromId(userId);
+        message1.setGoodId(Integer.valueOf(goodId));
+        if(userId==Integer.valueOf(toId))//若当前用户ID等于toId，则另一个用户ID为fromId
+        {
+            message1.setToId(Integer.valueOf(fromId));
+        }
+        else
+        {
+            message1.setToId(Integer.valueOf(toId));
+        }
+        goodsService.addMessage(message1);
+        return "redirect:/goods/contact?id="+goodId;
     }
 
 }

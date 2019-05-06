@@ -23,7 +23,6 @@ public class GoodsServiceImpl implements GoodsService {
     private MessageMapper messageMapper;
 
     public void add(Goods goods) {
-
         Date date = new Date();//获得系统时间.
         SimpleDateFormat sdf =   new SimpleDateFormat( " yyyy-MM-dd " );
         String nowTime = sdf.format(date);
@@ -61,5 +60,42 @@ public class GoodsServiceImpl implements GoodsService {
 
     public List<Message> findMessage(Integer goodId,Integer userId) {
         return messageMapper.findList(goodId,userId);
+    }
+
+    public void addMessage(Message message1) {
+        //获取当前系统时间
+        Date date = new Date();
+        SimpleDateFormat sdt = new SimpleDateFormat(" yyyy-MM-dd HH:mm:ss ");
+        String nowTime = sdt.format(date);
+        try {
+            Date time = sdt.parse(nowTime);
+            message1.setDate(time);
+            messageMapper.insert(message1);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Page findMyGoods(String currPage, Integer uid) {
+        if(currPage==null)
+        {
+            currPage = "1";
+        }
+        Page result = new Page();
+        int totalCount = goodsMapper.getMyTotalCount(uid);
+
+        result.setTotalCount(totalCount);
+        result.setCurrPage(Integer.valueOf(currPage));
+
+        List<Goods> list = goodsMapper.findMyPage(result.getBeginRows(),result.getPageSize(),uid);
+        result.setList(list);
+        return result;
+    }
+
+    public void delete(Integer id) {
+        Goods goods = new Goods();
+        goods.setId(id);
+        goods.setFlag(1);//假删除，置flag为1
+        goodsMapper.updateByPrimaryKeySelective(goods);
     }
 }

@@ -73,7 +73,7 @@
 								<li>2 Piece Swimsuits</li>
 							</ul>
 						</div><br><br><br>
-						<div class="reviews_title">reviews</div>
+						<div class="reviews_title">留言</div>
 						<div class="reviews_container">
 							<ul>
 								<!-- Review -->
@@ -84,10 +84,10 @@
 										<c:if test="${m.fromId!=userId}"><img src="images/you.jpg" alt=""></c:if>
 									</div>
 									<div class="review_content">
-										<div class="review_name">${m.fromName}</div>
-										<div class="review_date">${m.date}</div>
+										<div class="review_name">用户：${m.fromName}</div>
+										<div class="review_date">发送日期：${m.date}</div>
 										<div class="review_text">
-											<p>${m.content}</p>
+											<p>消息内容：${m.content}</p>
 										</div>
 									</div>
 								</li>
@@ -104,8 +104,11 @@
 				<div class="col">
 					<div class="review_form_container">
 						<div class="review_form_content">
-							<form action="#" id="review_form" class="review_form">
-								<textarea class="review_form_text" name="review_form_text" placeholder="Message"></textarea>
+							<form action="goods/addMessage" id="review_form" class="review_form">
+								<textarea class="review_form_text" name="message" placeholder="Message"></textarea>
+								<input name="goodId" hidden="hidden" value="${goodId}">
+								<input name="toId" hidden="hidden" value="${message[0].toId}">
+								<input name="fromId" hidden="hidden" value="${message[0].fromId}">
 								<button type="submit" class="review_form_button">leave a review</button>
 							</form>
 						</div>

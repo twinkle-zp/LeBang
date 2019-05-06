@@ -14,4 +14,10 @@ public interface GoodsService {
     Goods findById(Integer id);
 
     List<Message> findMessage(Integer goodId,Integer userId);
+
+    void addMessage(Message message1);
+
+    Page findMyGoods(String currPage, Integer uid);
+
+    void delete(Integer id);
 }

@@ -20,4 +20,9 @@ public interface GoodsMapper {
     int getTotalCount();
 
     List<Goods> findPage(Integer beginRows, Integer pageSize);
+
+    int getMyTotalCount(Integer uid);
+
+    List<Goods> findMyPage(Integer beginRows, Integer pageSize, Integer uid);
+
 }

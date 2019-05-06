@@ -130,7 +130,16 @@
     select count(id) from goods
   </select>
 
-  <select id="findPage" resultType="com.plat.entity.Goods" parameterType="object">
-     select <include refid="Base_Column_List" /> from goods where flag=0 limit #{param1},#{param2}
+  <select id="findPage" resultMap="BaseResultMap" parameterType="object">
+    select <include refid="Base_Column_List" /> from goods where flag=0 limit #{param1},#{param2}
   </select>
+
+  <select id="getMyTotalCount" resultType="int" parameterType="int">
+    select count(id) from goods where user_id=#{uid}
+  </select>
+
+  <select id="findMyPage" resultMap="BaseResultMap" parameterType="object">
+    select <include refid="Base_Column_List" /> from goods where flag=0 and user_id=#{param3} limit #{param1},#{param2}
+  </select>
+
 </mapper>

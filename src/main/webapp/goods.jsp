@@ -20,6 +20,7 @@
 <link rel="stylesheet" type="text/css" href="plugins/jquery-ui-1.12.1.custom/jquery-ui.css">
 <link rel="stylesheet" type="text/css" href="styles/categories.css">
 <link rel="stylesheet" type="text/css" href="styles/categories_responsive.css">
+	<link rel="stylesheet" href="css/layui.css"  media="all">
 </head>
 <body>
 
@@ -62,6 +63,53 @@
 
 					<div class="sidebar_left clearfix">
 
+						<!-- Size -->
+						<div class="sidebar_section sidebar_options">
+							<div class="sidebar_section_content">
+
+								<!-- Option Item -->
+								<div class="sidebar_option d-flex flex-row align-items-center justify-content-start">
+									<div class="option_image"><img src="images/option_1.png" alt=""></div>
+									<div class="option_content">
+										<div class="option_title">30 Days Returns</div>
+										<div class="option_subtitle">No questions asked</div>
+									</div>
+								</div>
+
+								<!-- Option Item -->
+
+								<div class="sidebar_option d-flex flex-row align-items-center justify-content-start">
+									<div class="option_image"><img src="images/option_2.png" alt=""></div>
+									<a href="goods/myGoods">
+										<div class="option_content">
+										<div class="option_title">我的商品</div>
+										<div class="option_subtitle">my goods</div>
+										</div>
+									</a>
+								</div>
+
+								<!-- Option Item -->
+								<div class="sidebar_option d-flex flex-row align-items-center justify-content-start">
+									<div class="option_image"><img src="images/option_3.png" alt=""></div>
+									<div class="option_content">
+										<div class="option_title">Secure Payments</div>
+										<div class="option_subtitle">No need to worry</div>
+									</div>
+								</div>
+
+								<!-- Option Item -->
+								<div class="sidebar_option d-flex flex-row align-items-center justify-content-start">
+									<div class="option_image"><img src="images/option_4.png" alt=""></div>
+									<a href="goods/myMessage">
+									<div class="option_content">
+										<div class="option_title">我的留言</div>
+										<div class="option_subtitle">my message</div>
+									</div>
+									</a>
+								</div>
+
+							</div>
+						</div>
 						<!-- Categories -->
 						<div class="sidebar_section">
 							<div class="sidebar_title">Categories</div>
@@ -138,48 +186,7 @@
 							</div>
 						</div>
 
-						<!-- Size -->
-						<div class="sidebar_section sidebar_options">
-							<div class="sidebar_section_content">
 
-								<!-- Option Item -->
-								<div class="sidebar_option d-flex flex-row align-items-center justify-content-start">
-									<div class="option_image"><img src="images/option_1.png" alt=""></div>
-									<div class="option_content">
-										<div class="option_title">30 Days Returns</div>
-										<div class="option_subtitle">No questions asked</div>
-									</div>
-								</div>
-
-								<!-- Option Item -->
-								<div class="sidebar_option d-flex flex-row align-items-center justify-content-start">
-									<div class="option_image"><img src="images/option_2.png" alt=""></div>
-									<div class="option_content">
-										<div class="option_title">Free Delivery</div>
-										<div class="option_subtitle">On all orders</div>
-									</div>
-								</div>
-
-								<!-- Option Item -->
-								<div class="sidebar_option d-flex flex-row align-items-center justify-content-start">
-									<div class="option_image"><img src="images/option_3.png" alt=""></div>
-									<div class="option_content">
-										<div class="option_title">Secure Payments</div>
-										<div class="option_subtitle">No need to worry</div>
-									</div>
-								</div>
-
-								<!-- Option Item -->
-								<div class="sidebar_option d-flex flex-row align-items-center justify-content-start">
-									<div class="option_image"><img src="images/option_4.png" alt=""></div>
-									<div class="option_content">
-										<div class="option_title">24/7 Support</div>
-										<div class="option_subtitle">Just call us</div>
-									</div>
-								</div>
-
-							</div>
-						</div>
 
 					</div>
 
@@ -239,11 +246,13 @@
 							<div class="product_content clearfix">
 								<div class="product_info">
 									<div class="product_name"><a href="goods/findGoodsById?id=${p.id}">${p.name}</a></div>
-									<div class="product_price">${p.price}</div>
+									<div class="product_price">￥${p.price}</div>
 								</div>
 								<div class="product_options">
 									<div class="product_buy product_option"><img src="images/shopping-bag-white.svg" alt=""></div>
-									<div class="product_fav product_option">+</div>
+
+									<c:if test="${userId==p.userId}"><a onclick="deleteGood(${p.id})"><div class="product_fav product_option">×</div></a></c:if>
+									<c:if test="${userId!=p.userId}"><div class="product_fav product_option">+</div></c:if>
 								</div>
 							</div>
 						</div>
@@ -299,6 +308,13 @@
 
 </div>
 
+<script>
+	function deleteGood(id) {
+		if(confirm("是否下架该商品")){
+			document.location.href="goods/delete?id="+id;
+		}
+	}
+</script>
 <script src="js/jquery-3.2.1.min.js"></script>
 <script src="styles/bootstrap4/popper.js"></script>
 <script src="styles/bootstrap4/bootstrap.min.js"></script>
