@@ -113,7 +113,7 @@ public class GoodsController {
         return "redirect:/goods/myGoods";
     }
     /**
-     * 获取两个用户之间所有留言消息
+     * 联系卖家留言
      * @param request
      * @param response
      * @param model
@@ -160,6 +160,21 @@ public class GoodsController {
         }
         goodsService.addMessage(message1);
         return "redirect:/goods/contact?id="+goodId;
+    }
+
+    /**
+     * 获取当前用户与其他用户的留言列表
+     * @param request
+     * @param response
+     * @param model
+     * @return
+     */
+    @RequestMapping("/myMessage")
+    public String myMessage(HttpServletRequest request, HttpServletResponse response, Model model){
+        User user = (User)request.getSession().getAttribute("user");
+        List<Message> messagesList = goodsService.findMessageList(user.getUid());
+        request.setAttribute("messageList",messagesList);
+        return "messageList";
     }
 
 }

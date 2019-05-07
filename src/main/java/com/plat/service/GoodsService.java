@@ -20,4 +20,6 @@ public interface GoodsService {
     Page findMyGoods(String currPage, Integer uid);
 
     void delete(Integer id);
+
+    List<Message> findMessageList(Integer uid);
 }

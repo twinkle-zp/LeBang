@@ -1610,3 +1610,84 @@ section
 	font-size: 12px;
 	color: #232323;
 }
+
+/*********************************
+9. Reviews
+*********************************/
+
+.reviews
+{
+	width: 100%;
+	margin-top: 99px;
+}
+.reviews_title
+{
+	font-family: 'Lucida', serif;
+	font-size: 30px;
+	color: #232323;
+	text-transform: uppercase;
+	line-height: 0.75;
+}
+.reviews_container
+{
+	margin-top: 109px;
+	margin-left: 109px;
+}
+.review
+{
+	margin-bottom: 62px;
+}
+.reviews_container ul li:last-child
+{
+	margin-bottom: 0;
+}
+.review_image
+{
+	width: 92px;
+	height: 122px;
+	overflow: hidden;
+
+	float: left;
+}
+.review_image img
+{
+	max-width: 100%;
+}
+.review_content
+{
+	padding-left: 139px;
+}
+.review_name a
+{
+	font-size: 16px;
+	font-weight: 600;
+	color: #232323;
+	-webkit-transition: all 200ms ease;
+	-moz-transition: all 200ms ease;
+	-ms-transition: all 200ms ease;
+	-o-transition: all 200ms ease;
+	transition: all 200ms ease;
+}
+.review_name a:hover
+{
+	color: #937c6f;
+}
+.review_date
+{
+	font-size: 15px;
+	color: #937c6f;
+	margin-top: 3px;
+}
+.review_text
+{
+	margin-top: 28px;
+}
+.review_text p
+{
+	color: #777777;
+	line-height: 2.14;
+}
+.review_text p:last-of-type
+{
+	margin-bottom: 0;
+}

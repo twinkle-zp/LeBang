@@ -2,9 +2,12 @@ package com.plat.service;
 
 import com.plat.dao.GoodsMapper;
 import com.plat.dao.MessageMapper;
+import com.plat.dao.UserMapper;
 import com.plat.entity.Goods;
 import com.plat.entity.Message;
 import com.plat.entity.Page;
+import com.plat.entity.User;
+import com.plat.util.MessageUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +24,9 @@ public class GoodsServiceImpl implements GoodsService {
 
     @Autowired
     private MessageMapper messageMapper;
+
+    @Autowired
+    private UserMapper userMapper;
 
     public void add(Goods goods) {
         Date date = new Date();//获得系统时间.
@@ -97,5 +103,21 @@ public class GoodsServiceImpl implements GoodsService {
         goods.setId(id);
         goods.setFlag(1);//假删除，置flag为1
         goodsMapper.updateByPrimaryKeySelective(goods);
+    }
+
+    public List<Message> findMessageList(Integer uid) {
+        List<Message> messageList = messageMapper.findMessageList(uid);
+        MessageUtils messageUtils = new MessageUtils();
+        List<Message> newMessageList = messageUtils.removeDuplicate(messageList,uid);//去重复
+        for(Message m: newMessageList){  //将留言对应的商品图片及商品名查询出存入List，便于前端显示
+            Goods goods = goodsMapper.selectByPrimaryKey(m.getGoodId());
+            User user = userMapper.selectByPrimaryKey(m.getToUserId());
+            if(goods!=null){
+                m.setGoodImg(goods.getImage());
+                m.setGoodName(goods.getName());
+            }
+            m.setToUserName(user.getName());
+        }
+        return newMessageList;
     }
 }

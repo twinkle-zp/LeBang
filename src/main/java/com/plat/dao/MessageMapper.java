@@ -18,4 +18,6 @@ public interface MessageMapper {
     int updateByPrimaryKey(Message record);
 
     List<Message> findList(Integer good_id, Integer user_id);
+
+    List<Message> findMessageList(Integer uid);
 }

@@ -21,6 +21,38 @@ public class Message {
 
     private String fromName;
 
+    private String goodImg;
+
+    private Integer toUserId;//存储消息中不是当前用户的对方用户ID
+
+    private String toUserName;
+
+    public String getToUserName() {
+        return toUserName;
+    }
+
+    public void setToUserName(String toUserName) {
+        this.toUserName = toUserName;
+    }
+
+    public String getGoodImg() {
+        return goodImg;
+    }
+
+    public void setGoodImg(String goodImg) {
+        this.goodImg = goodImg;
+    }
+
+
+
+    public Integer getToUserId() {
+        return toUserId;
+    }
+
+    public void setToUserId(Integer toUserId) {
+        this.toUserId = toUserId;
+    }
+
     public String getGoodName() {
         return goodName;
     }

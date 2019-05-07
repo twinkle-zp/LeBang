@@ -122,4 +122,11 @@
     LEFT JOIN goods g on m.good_id=g.id
     WHERE m.good_id=#{param1} AND (m.to_id=#{param2} OR m.from_id=#{param2})
   </select>
+
+  <select id="findMessageList" parameterType="int" resultMap="BaseResultMap">
+    SELECT *,COUNT(DISTINCT to_id,from_id)
+    FROM message
+    WHERE to_id=#{uid} or from_id=#{uid}
+    GROUP BY to_id,from_id
+  </select>
 </mapper>
