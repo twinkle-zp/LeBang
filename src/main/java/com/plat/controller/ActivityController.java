@@ -72,4 +72,19 @@ public class ActivityController {
         return "activity";
 
     }
+
+    /**
+     * 查找所有活动分页显示
+     * @param request
+     * @param response
+     * @param model
+     * @return
+     */
+    @RequestMapping("/join")
+    public String join(HttpServletRequest request, HttpServletResponse response, Model model){
+        String contact = request.getParameter("contact");
+        String content = request.getParameter("content");
+        User user = (User)request.getSession().getAttribute("user");
+        return "activity";
+    }
 }

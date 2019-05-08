@@ -129,4 +129,12 @@
     WHERE to_id=#{uid} or from_id=#{uid}
     GROUP BY to_id,from_id
   </select>
+
+  <select id="findUserMessage" parameterType="object" resultMap="message">
+    select m.*,u1.`name` toname,u2.`name` fromname,g.`name` goodname from message m
+    LEFT JOIN `user` u1 on m.to_id=u1.uid
+    LEFT JOIN `user` u2 on m.from_id=u2.uid
+    LEFT JOIN goods g on m.good_id=g.id
+    WHERE m.good_id=#{param1} AND ((m.to_id=#{param2} AND m.from_id=#{param3}) OR (m.to_id=#{param3} AND m.from_id=#{param2}))
+  </select>
 </mapper>

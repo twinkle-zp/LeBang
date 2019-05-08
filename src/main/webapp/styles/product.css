@@ -1071,6 +1071,7 @@ section
 	overflow: hidden;
 	border-radius: 50%;
 	float: left;
+	position: absolute;
 }
 .review_image img
 {

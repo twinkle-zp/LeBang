@@ -242,7 +242,7 @@
                                 <c:if test="${m.goodName!=null}"><div class="review_date">关于 商品：${m.goodName} 的留言</div></c:if>
 
                                 <div class="review_text">
-                                    <p><a href="">点击查看</a></p>
+                                    <p><a href="goods/findUserMessage?id=${m.goodId}&toUserId=${m.toUserId}">点击查看</a></p>
                                 </div>
                             </div>
                         </li>

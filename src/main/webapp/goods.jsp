@@ -91,10 +91,12 @@
 								<!-- Option Item -->
 								<div class="sidebar_option d-flex flex-row align-items-center justify-content-start">
 									<div class="option_image"><img src="images/option_3.png" alt=""></div>
+                                    <a href="addgoods.jsp">
 									<div class="option_content">
-										<div class="option_title">Secure Payments</div>
-										<div class="option_subtitle">No need to worry</div>
+										<div class="option_title">上架商品</div>
+										<div class="option_subtitle">add goods</div>
 									</div>
+                                    </a>
 								</div>
 
 								<!-- Option Item -->

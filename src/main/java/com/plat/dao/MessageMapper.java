@@ -20,4 +20,6 @@ public interface MessageMapper {
     List<Message> findList(Integer good_id, Integer user_id);
 
     List<Message> findMessageList(Integer uid);
+
+    List<Message> findUserMessage(Integer goodId, Integer uid, Integer toUserId);
 }

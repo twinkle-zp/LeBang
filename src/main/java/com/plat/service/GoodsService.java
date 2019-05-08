@@ -22,4 +22,6 @@ public interface GoodsService {
     void delete(Integer id);
 
     List<Message> findMessageList(Integer uid);
+
+    List<Message> findUserMessage(Integer goodId, Integer uid, Integer toUserId);
 }

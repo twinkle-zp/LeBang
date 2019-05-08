@@ -73,16 +73,16 @@
 								<li>2 Piece Swimsuits</li>
 							</ul>
 						</div><br><br><br>
-						<div class="reviews_title">reviews</div>
+						<div class="reviews_title">Activities</div>
 
 						<div class="reviews_container">
 							<ul>
 								<!-- Review -->
 								<c:forEach items="${page.list}" var="p">
 								<li class=" review clearfix">
-									<div class="review_image"><img src="images/baoming.jpg" alt=""></div>
+									<a href="join_activity.jsp"><div class="review_image"><img src="images/baoming.jpg" /></div></a>
 									<div class="review_content">
-										<div class="review_name"><a href="#">${p.name}</a></div>
+										<div class="review_name"><a href="join_activity.jsp">${p.name}</a></div>
 										<div class="review_date">活动地点：${p.address}</div>
 										<div class="rating rating_4 review_rating" data-rating="4">
 											<i class="fa fa-star"></i>

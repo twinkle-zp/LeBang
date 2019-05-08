@@ -145,6 +145,11 @@ public class GoodsController {
         String toId = request.getParameter("toId");
         String fromId = request.getParameter("fromId");
         User user = (User)request.getSession().getAttribute("user");
+        if(fromId==""){   //未发过消息，第一次发消息
+            Goods goods = goodsService.findById(Integer.valueOf(goodId));
+            fromId = String.valueOf(goods.getUserId());
+            toId = String.valueOf(goods.getUserId());
+        }
         Integer userId = user.getUid();//获取当前用户ID
         Message message1 = new Message();
         message1.setContent(message);
@@ -153,13 +158,14 @@ public class GoodsController {
         if(userId==Integer.valueOf(toId))//若当前用户ID等于toId，则另一个用户ID为fromId
         {
             message1.setToId(Integer.valueOf(fromId));
+            toId=fromId;
         }
         else
         {
             message1.setToId(Integer.valueOf(toId));
         }
         goodsService.addMessage(message1);
-        return "redirect:/goods/contact?id="+goodId;
+        return "redirect:/goods/findUserMessage?id="+goodId+"&toUserId="+toId;
     }
 
     /**
@@ -175,6 +181,25 @@ public class GoodsController {
         List<Message> messagesList = goodsService.findMessageList(user.getUid());
         request.setAttribute("messageList",messagesList);
         return "messageList";
+    }
+
+    /**
+     * 获取当前用户与其他用户的详细留言
+     * @param request
+     * @param response
+     * @param model
+     * @return
+     */
+    @RequestMapping("/findUserMessage")
+    public String findMessage(HttpServletRequest request, HttpServletResponse response, Model model){
+        String goodId = request.getParameter("id");
+        String toUserId = request.getParameter("toUserId");
+        User user = (User)request.getSession().getAttribute("user");//获取当前用户
+        List<Message> list = goodsService.findUserMessage(Integer.valueOf(goodId),user.getUid(),Integer.valueOf(toUserId));
+        request.setAttribute("userId",user.getUid());
+        request.setAttribute("message",list);
+        request.setAttribute("goodId",goodId);
+        return "contact";
     }
 
 }

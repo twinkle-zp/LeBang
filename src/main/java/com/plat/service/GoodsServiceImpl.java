@@ -120,4 +120,8 @@ public class GoodsServiceImpl implements GoodsService {
         }
         return newMessageList;
     }
+
+    public List<Message> findUserMessage(Integer goodId, Integer uid, Integer toUserId) {
+        return messageMapper.findUserMessage(goodId,uid,toUserId);
+    }
 }
