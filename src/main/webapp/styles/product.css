@@ -729,9 +729,9 @@ section
 {
 	display: inline-block;
 	position: relative;
-	font-family: 'Lucida', serif;
+	font-family: '微软雅黑';
 	font-size: 16px;
-	color: #232323;
+	color: #777777;
 }
 .current_page ul li::after
 {
@@ -746,9 +746,9 @@ section
 }
 .current_page ul li a
 {
-	font-family: 'Lucida', serif;
+	font-family: '微软雅黑';
 	font-size: 16px;
-	color: #232323;
+	color: #777777;
 	-webkit-transition: all 200ms ease;
 	-moz-transition: all 200ms ease;
 	-ms-transition: all 200ms ease;
@@ -1081,6 +1081,10 @@ section
 {
 	padding-left: 139px;
 }
+.review_date button
+{
+	margin-left: 630px;
+}
 .review_name a
 {
 	font-size: 16px;
@@ -1108,7 +1112,7 @@ section
 }
 .review_text
 {
-	margin-top: 28px;
+	margin-top: 14px;
 }
 .review_text p
 {

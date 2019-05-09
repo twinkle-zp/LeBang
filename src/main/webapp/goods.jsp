@@ -70,10 +70,12 @@
 								<!-- Option Item -->
 								<div class="sidebar_option d-flex flex-row align-items-center justify-content-start">
 									<div class="option_image"><img src="images/option_1.png" alt=""></div>
+									<a href="goods/findGoodList">
 									<div class="option_content">
-										<div class="option_title">30 Days Returns</div>
-										<div class="option_subtitle">No questions asked</div>
+										<div class="option_title">全部商品</div>
+										<div class="option_subtitle">all goods</div>
 									</div>
+									</a>
 								</div>
 
 								<!-- Option Item -->

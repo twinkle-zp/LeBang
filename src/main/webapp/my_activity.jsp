@@ -19,7 +19,6 @@
     <link rel="stylesheet" type="text/css" href="styles/product.css">
     <link rel="stylesheet" type="text/css" href="styles/product_responsive.css">
 </head>
-
 <body>
 
 <div class="super_container">
@@ -49,42 +48,69 @@
             </ul>
         </nav>
     </div>
+
+
     <!-- Product -->
 
     <div class="product">
         <div class="container">
             <div class="row">
                 <div class="col">
-                    <div class="current_page">
-                        <ul>
-                            <li><a href="categories.html">Woman's Fashion</a></li>
-                            <li><a href="categories.html">Swimsuits</a></li>
-                            <li>2 Piece Swimsuits</li>
-                        </ul>
-                    </div>
+
                 </div>
             </div>
 
 
-            <!-- Leave a Review -->
+            <!-- Reviews -->
 
             <div class="row">
                 <div class="col">
-                    <div class="review_form_container">
-                        <div class="review_form_title">活动报名</div>
-                        <div class="review_form_content">
-                            <form action="activity/join" id="review_form" class="review_form" method="post">
-                                <div class="d-flex flex-md-row flex-column align-items-start justify-content-between">
-                                    <input type="text" class="review_form_input" placeholder="联系方式" required="required" name="contact">
-                                    <input type="hidden" name="activityId" value="${activityId}">
-                                </div>
-                                <textarea class="review_form_text" name="content" placeholder="备注"></textarea>
-                                <button type="submit" class="review_form_button">报名</button>
-                            </form>
+                    <div class="reviews">
+                        <div class="current_page">
+                            <ul>
+                                <li><a href="add_activity.jsp">发起活动</a></li>
+                                <li><a href="activity/myJoinActivity">我报名的</a></li>
+                                <li><a href="activity/myActivity">我发起的</a></li>
+                            </ul>
+                        </div><br><br><br>
+                        <div class="reviews_title">My Activity</div>
+
+                        <div class="reviews_container">
+                            <ul>
+                                <!-- Review -->
+                                <c:forEach items="${activityList}" var="a">
+                                    <li class=" review clearfix">
+                                        <a href="join_activity.jsp"><div class="review_image"><img src="images/baoming.jpg" /></div></a>
+                                        <div class="review_content">
+                                            <div class="review_name">
+                                                <a href="activity/joinList?activityId=${a.id}">${a.name}&nbsp;&nbsp;[当前报名人数：${a.num}]&nbsp;&nbsp;点击审核
+                                                </a>
+                                            </div>
+                                            <div class="review_date">活动地点：${a.address}</div>
+                                            <div class="review_text">
+                                                <p>${a.content}</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </c:forEach>
+                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
+            <br><br><br><br>
+            <div class="row page_num_container">
+                <div class="col text-right">
+                    <ul class="page_nums">
+                        <c:forEach begin="1" end="${page.totalPage}" var="currPage">
+                            <li <c:if test="${page.currPage == currPage}">class="active"</c:if> > <a href="#">${currPage}</a>
+                            </li>
+                        </c:forEach>
+                    </ul>
+                </div>
+            </div>
+
+
         </div>
     </div>
 

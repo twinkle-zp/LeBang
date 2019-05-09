@@ -126,4 +126,12 @@
   <select id="findPage" resultType="com.plat.entity.Activity" parameterType="object">
     select <include refid="Base_Column_List" /> from activity limit #{param1},#{param2}
   </select>
+
+
+  <select id="findMyActivity" resultMap="ResultMapWithBLOBs" parameterType="int">
+    select
+    <include refid="Base_Column_List" />
+     from activity
+     where uid=#{uid}
+  </select>
 </mapper>

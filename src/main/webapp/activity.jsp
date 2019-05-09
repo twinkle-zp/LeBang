@@ -69,8 +69,8 @@
 						<div class="current_page">
 							<ul>
 								<li><a href="add_activity.jsp">发起活动</a></li>
-								<li><a href="categories.html">Swimsuits</a></li>
-								<li>2 Piece Swimsuits</li>
+								<li><a href="activity/myJoinActivity">我报名的</a></li>
+								<li><a href="activity/myActivity">我发起的</a></li>
 							</ul>
 						</div><br><br><br>
 						<div class="reviews_title">Activities</div>
@@ -82,15 +82,8 @@
 								<li class=" review clearfix">
 									<a href="join_activity.jsp"><div class="review_image"><img src="images/baoming.jpg" /></div></a>
 									<div class="review_content">
-										<div class="review_name"><a href="join_activity.jsp">${p.name}</a></div>
+										<div class="review_name"><a href="activity/joinPage?activityId=${p.id}">${p.name}</a></div>
 										<div class="review_date">活动地点：${p.address}</div>
-										<div class="rating rating_4 review_rating" data-rating="4">
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-										</div>
 										<div class="review_text">
 											<p>${p.content}</p>
 										</div>

@@ -13,6 +13,16 @@ public class Activity {
 
     private String content;
 
+    private Integer num;//当前报名人数
+
+    public Integer getNum() {
+        return num;
+    }
+
+    public void setNum(Integer num) {
+        this.num = num;
+    }
+
     public Integer getId() {
         return id;
     }

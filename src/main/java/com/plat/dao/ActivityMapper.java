@@ -1,6 +1,7 @@
 package com.plat.dao;
 
 import com.plat.entity.Activity;
+import com.plat.entity.ActivityJoin;
 
 import java.util.List;
 
@@ -22,4 +23,7 @@ public interface ActivityMapper {
     int getTotalCount();
 
     List<Activity> findPage(Integer beginRows, Integer pageSize);
+
+    List<Activity> findMyActivity(Integer uid);
+
 }

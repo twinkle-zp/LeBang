@@ -74,7 +74,20 @@ public class ActivityController {
     }
 
     /**
-     * 查找所有活动分页显示
+     * 跳转到报名页面
+     * @param request
+     * @param response
+     * @param model
+     * @return
+     */
+    @RequestMapping("/joinPage")
+    public String joinPage(HttpServletRequest request, HttpServletResponse response, Model model){
+        String activityId = request.getParameter("activityId");
+        request.setAttribute("activityId",activityId);
+        return "join_activity";
+    }
+    /**
+     * 提交报名表
      * @param request
      * @param response
      * @param model
@@ -82,9 +95,85 @@ public class ActivityController {
      */
     @RequestMapping("/join")
     public String join(HttpServletRequest request, HttpServletResponse response, Model model){
+        String activityId = request.getParameter("activityId");
         String contact = request.getParameter("contact");
         String content = request.getParameter("content");
         User user = (User)request.getSession().getAttribute("user");
-        return "activity";
+        ActivityJoin activityJoin = new ActivityJoin();
+        activityJoin.setAid(Integer.valueOf(activityId));
+        activityJoin.setContact(contact);
+        activityJoin.setContent(content);
+        activityJoin.setFlag(0);//0为存在标记，1为已删除
+        activityJoin.setState(0);//0为未审核
+        activityJoin.setUid(user.getUid());
+        activityJoin.setName(user.getName());
+        activityService.join(activityJoin);
+        return "redirect:/activity/findList";
+    }
+
+    /**
+     * 查找当前用户已报名的活动
+     * @param request
+     * @param response
+     * @param model
+     * @return
+     */
+    @RequestMapping("/myJoinActivity")
+    public String myJoinActivity(HttpServletRequest request, HttpServletResponse response, Model model){
+        User user = (User) request.getSession().getAttribute("user");
+        List<ActivityJoin> activityJoinList = activityService.findMyJoin(user.getUid());
+        request.setAttribute("activityJoinList",activityJoinList);
+        return "my_join_activity";
+    }
+
+    /**
+     * 查找当前用户已发起的所有活动
+     * @param request
+     * @param response
+     * @param model
+     * @return
+     */
+    @RequestMapping("/myActivity")
+    public String myActivity(HttpServletRequest request, HttpServletResponse response, Model model){
+        User user = (User) request.getSession().getAttribute("user");
+        List<Activity> activityList = activityService.findMyActivity(user.getUid());
+        request.setAttribute("activityList",activityList);
+        return "my_activity";
+    }
+
+    /**
+     * 查找当前活动的报名列表
+     * @param request
+     * @param response
+     * @param model
+     * @return
+     */
+    @RequestMapping("/joinList")
+    public String joinList(HttpServletRequest request, HttpServletResponse response, Model model){
+        String activityId = request.getParameter("activityId");
+        List<ActivityJoin> activityJoinList = activityService.findJoinList(Integer.valueOf(activityId));
+        request.setAttribute("activityJoinList",activityJoinList);
+        return "activity_join_check";
+    }
+
+    /**
+     * 审核报名表
+     * @param request
+     * @param response
+     * @param model
+     * @return
+     */
+    @RequestMapping("/check")
+    public String check(HttpServletRequest request, HttpServletResponse response, Model model){
+        String activityJoinId = request.getParameter("activityJoinId");
+        String state = request.getParameter("state");
+        String activityId= request.getParameter("activityId");
+        if(state.equals("0")){
+            activityService.check(0,Integer.valueOf(activityJoinId));  //审核未通过
+        }
+        else{
+            activityService.check(1,Integer.valueOf(activityJoinId));
+        }
+        return "redirect:/activity/joinList?activityId="+activityId;
     }
 }
