@@ -170,11 +170,7 @@ section
 {
 	clear: both;
 }
-.clearfix::before, .clearfix::after
-{
-	content: "";
-	display: table;
-}
+
 .clearfix::after
 {
 	clear: both;
@@ -1059,6 +1055,7 @@ section
 .review
 {
 	margin-bottom: 62px;
+	display: flex;
 }
 .reviews_container ul li:last-child
 {
@@ -1068,22 +1065,29 @@ section
 {
 	width: 92px;
 	height: 92px;
-	overflow: hidden;
-	border-radius: 50%;
-	float: left;
-	position: absolute;
+}
+.review_image > a {
+	display: block;
 }
 .review_image img
 {
 	max-width: 100%;
+	border-radius: 50%;
 }
 .review_content
 {
-	padding-left: 139px;
+	display: flex;
+	flex-direction: column;
+	padding-left: 20px;
 }
 .review_date button
 {
 	margin-left: 630px;
+}
+.review_name
+{
+	display: flex;
+	flex-direction: row;
 }
 .review_name a
 {
@@ -1099,6 +1103,10 @@ section
 .review_name a:hover
 {
 	color: #937c6f;
+}
+
+.review_name button
+{
 }
 .review_date
 {
@@ -1430,4 +1438,41 @@ section
 	font-family: 'Lucida', serif;
 	font-size: 12px;
 	color: #232323;
+}
+/*********************************
+11. 交通互助页面
+*********************************/
+
+.resource_function
+{
+	margin-left: 400px;
+	margin-top: 150px;
+}
+.resource_display
+{
+	margin-left: 300px;
+	margin-top: 100px;
+}
+.resource_display button
+{
+	margin-right: 400px;
+	float: right;
+}
+
+/*********************************
+11. 论坛页面
+*********************************/
+
+.forum_function
+{
+	margin-top: 150px;
+	margin-left: 350px;
+}
+.forum_add
+{
+	margin-top: 0px;
+}
+.forum_add .container
+{
+	margin-top: 0px;
 }
