@@ -1,9 +1,6 @@
 package com.plat.service;
 
-import com.plat.entity.Article;
-import com.plat.entity.ArticleComment;
-import com.plat.entity.ArticleType;
-import com.plat.entity.Page;
+import com.plat.entity.*;
 
 import java.util.List;
 
@@ -21,4 +18,8 @@ public interface ForumService {
     Article findArticleById(Integer id);
 
     List<ArticleComment> findCommentList(Integer aid);
+
+    void addComment(Integer article_id, String content, Integer uid);
+
+    List<ArticleMulti> findMultiList(Integer comment_id);
 }

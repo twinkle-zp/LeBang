@@ -116,42 +116,18 @@
                                         </p>
 
                                     </div><!-- end .comment-meta -->
-
                                     <div class="comment-body">
                                         <p>${c.content}</p>
                                     </div><!-- end of comment-body -->
-
+                                    <span class="comments" style="margin-left: 400px">
+                                        <a href="javascript:void(0);" onclick="">回复TA</a>
+                                    </span>
+                                    <span class="comments" style="margin-left: 20px">
+                                        <a href="javascript:void(0);" onclick="findMulti(${c.id})">评论（${c.num}）</a>
+                                    </span>
                                 </article><!-- end of comment -->
 
-                                <ul class="children">
-
-                                    <li class="comment byuser comment-author-saqib-sarwar bypostauthor odd alt depth-2" id="li-comment-3">
-                                        <article id="comment-3">
-
-                                            <a href="#">
-                                                <img alt="" src="http://0.gravatar.com/avatar/2df5eab0988aa5ff219476b1d27df755?s=60&amp;d=http%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D60&amp;r=G" class="avatar avatar-60 photo" height="60" width="60">
-                                            </a>
-
-                                            <div class="comment-meta">
-
-                                                <h5 class="author">
-                                                    <cite class="fn">测试123</cite>
-                                                    - <a class="comment-reply-link" href="#">Reply</a>
-                                                </h5>
-
-                                                <p class="date">
-                                                        <time datetime="2013-02-26T13:20:14+00:00">2019-5-11 18:35:22</time>
-                                                </p>
-
-                                            </div><!-- end .comment-meta -->
-
-                                            <div class="comment-body">
-                                                <p>多少钱</p>
-                                            </div><!-- end of comment-body -->
-
-                                        </article><!-- end of comment -->
-
-                                    </li>
+                                <ul class="children" id="children${c.id}">
                                 </ul>
                             </li>
                             </c:forEach>
@@ -166,14 +142,14 @@
                             </div>
 
 
-                            <form action="#" method="post" id="commentform">
+                            <form action="forum/addComment?id=${article.id}" method="post" id="commentform">
 
 
                                 <p class="comment-notes">Your email address will not be published. Required fields are marked <span class="required">*</span></p>
 
 
                                 <div>
-                                    <textarea class="span8" name="comment" id="comment" cols="58" rows="10"></textarea>
+                                    <textarea class="span8" name="content" id="comment" cols="58" rows="10"></textarea>
                                 </div>
 
                                 <div>
@@ -194,6 +170,63 @@
 
 
 </div>
+<script type="application/javascript">
+
+    function findMulti(id)
+    {
+        if($("#children"+id+">li").length==0)
+        {
+            //没有li
+            $.ajax({
+                url:"forum/findMulti?id="+id,
+                type:"get",
+                dataType:"json",
+                success:function (json) {
+                    //循环遍历json
+                    for(var i = 0 ;i < json.length;i++)
+                    {
+                        var multi = json[i];
+                        //拼装li节点
+                        var multiNode = "<li class=\"comment byuser comment-author-saqib-sarwar bypostauthor odd alt depth-2\" id=\"li-comment-3\">\n" +
+                            "                                        <article id=\"comment-3\">\n" +
+                            "\n" +
+                            "                                            <a href=\"#\">\n" +
+                            "                                                <img alt=\"\" src=\"http://0.gravatar.com/avatar/2df5eab0988aa5ff219476b1d27df755?s=60&amp;d=http%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D60&amp;r=G\" class=\"avatar avatar-60 photo\" height=\"60\" width=\"60\">\n" +
+                            "                                            </a>\n" +
+                            "\n" +
+                            "                                            <div class=\"comment-meta\">\n" +
+                            "\n" +
+                            "                                                <h5 class=\"author\">\n" +
+                            "                                                    <cite class=\"fn\">"+multi.uname+"</cite>\n" +
+                            "                                                    - <a class=\"comment-reply-link\" href=\"#\">Reply</a>\n" +
+                            "                                                </h5>\n" +
+                            "\n" +
+                            "                                                <p class=\"date\">\n" +
+                            "                                                        <time datetime=\"2013-02-26T13:20:14+00:00\">"+multi.time+"</time>\n" +
+                            "                                                </p>\n" +
+                            "\n" +
+                            "                                            </div><!-- end .comment-meta -->\n" +
+                            "\n" +
+                            "                                            <div class=\"comment-body\">\n" +
+                            "                                                <p>"+multi.content+"</p>\n" +
+                            "                                            </div><!-- end of comment-body -->\n" +
+                            "\n" +
+                            "                                        </article><!-- end of comment -->\n" +
+                            "\n" +
+                            "                                    </li>"
+                        //选中categoryList ，追加liNode
+                        $("#children"+id).append(multiNode);
+                    }
+                }
+            })
+        }
+        else
+        {
+            $("#children"+id).empty();
+        }
+
+    }
+</script>
 <script type='text/javascript' src='js/jquery-1.8.3.min.js'></script>
 <script type='text/javascript' src='js/jquery.easing.1.34e44.js?ver=1.3'></script>
 <script type='text/javascript' src='js/prettyphoto/jquery.prettyPhotoaeb9.js?ver=3.1.4'></script>

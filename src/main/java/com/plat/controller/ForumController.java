@@ -113,7 +113,7 @@ public class ForumController {
      */
     @RequestMapping("/findDetail")
     public String findDetail(HttpServletRequest request, HttpServletResponse response, Model model){
-        String id = request.getParameter("id");//获取当前页
+        String id = request.getParameter("id");//获取当前帖子id
         Article article = forumService.findArticleById(Integer.valueOf(id));
         List<ArticleComment> articleCommentList = forumService.findCommentList(Integer.valueOf(id));
         request.setAttribute("article",article);
@@ -122,4 +122,38 @@ public class ForumController {
 
     }
 
+    /**
+     * 帖子一级回复
+     * @param request
+     * @param response
+     * @param model
+     * @return
+     */
+    @RequestMapping("/addComment")
+    public String addComment(HttpServletRequest request, HttpServletResponse response, Model model){
+        String article_id = request.getParameter("id");//获取当前帖子id
+        String content = request.getParameter("content");
+        User user = (User)request.getSession().getAttribute("user");
+        forumService.addComment(Integer.valueOf(article_id),content,user.getUid());
+        return "redirect:/forum/findDetail?id="+article_id;
+
+    }
+
+    /**
+     * 查找当前回复的二级回复列表
+     * @param request
+     * @param response
+     * @param model
+     * @return
+     */
+    @RequestMapping("/findMulti")
+    public void findMulti(HttpServletRequest request, HttpServletResponse response, Model model) throws IOException {
+        String comment_id = request.getParameter("id");//获取当前回复id
+        List<ArticleMulti> multiList = forumService.findMultiList(Integer.valueOf(comment_id));
+        String json = JSON.toJSONString(multiList);   //转成json数据
+        response.setCharacterEncoding("utf-8");
+        PrintWriter writer = response.getWriter();
+        writer.write(json);
+        writer.flush();
+    }
 }

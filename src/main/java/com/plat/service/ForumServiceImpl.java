@@ -2,11 +2,10 @@ package com.plat.service;
 
 import com.plat.dao.ArticleCommentMapper;
 import com.plat.dao.ArticleMapper;
+import com.plat.dao.ArticleMultiMapper;
 import com.plat.dao.ArticleTypeMapper;
-import com.plat.entity.Article;
-import com.plat.entity.ArticleComment;
-import com.plat.entity.ArticleType;
-import com.plat.entity.Page;
+import com.plat.entity.*;
+import com.plat.util.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +22,9 @@ public class ForumServiceImpl implements ForumService {
 
     @Autowired
     private ArticleCommentMapper articleCommentMapper;
+
+    @Autowired
+    private ArticleMultiMapper articleMultiMapper;
 
     public List<ArticleType> findType() {
         return articleTypeMapper.findAll();
@@ -55,5 +57,22 @@ public class ForumServiceImpl implements ForumService {
     public List<ArticleComment> findCommentList(Integer aid) {
 
         return articleCommentMapper.findListByAid(aid);
+    }
+
+    public void addComment(Integer article_id, String content, Integer uid) {
+        ArticleComment articleComment = new ArticleComment();
+        articleComment.setArtid(article_id);
+        articleComment.setContent(content);
+        articleComment.setUid(uid);
+        articleComment.setFlag(0);
+        articleComment.setNum(0);
+        DateUtils dateUtils = new DateUtils();
+        articleComment.setTime(dateUtils.getNowTime());
+        articleCommentMapper.insert(articleComment);
+    }
+
+    public List<ArticleMulti> findMultiList(Integer comment_id) {
+        List<ArticleMulti> articleMultiList = articleMultiMapper.findMultiByCid(comment_id);
+        return articleMultiList;
     }
 }
