@@ -54,7 +54,7 @@
 
     <div class="forum_function">
         <button class="layui-btn layui-btn-primary layui-btn-sm"><i class="layui-icon"></i></button>
-        <button class="layui-btn layui-btn-primary layui-btn-sm" name="发帖" onclick="javascript:window.location.href='forum_add.html'">
+        <button class="layui-btn layui-btn-primary layui-btn-sm" name="发帖" onclick="javascript:window.location.href='forum_add.jsp'">
             <i class="layui-icon"></i>
         </button>
         <button class="layui-btn layui-btn-primary layui-btn-sm"><i class="layui-icon"></i></button>

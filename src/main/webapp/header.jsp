@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!-- Header -->
 
-<header class="header">
+<header class="header" style="background-color: seashell">
     <div class="header_inner d-flex flex-row align-items-center justify-content-start">
         <div class="logo"><a href="#">LeBang</a></div>
         <nav class="main_nav">
@@ -17,7 +17,7 @@
                 <li><a href="goods.jsp">交通互助</a></li>
                 <li><a href="activity/findList">活动发布</a></li>
                 <li><a href="forum/findList">代办事务</a></li>
-                <li><a href="Register.jsp">资源共享</a></li>
+                <li><a href="resource/findList">资源共享</a></li>
             </ul>
         </nav>
         <div class="header_content ml-auto">

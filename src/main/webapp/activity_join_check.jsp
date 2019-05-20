@@ -123,7 +123,7 @@
 
 
 </div>
-<script src="layui.js" charset="utf-8"></script>
+<script src="layui/layui.js" charset="utf-8"></script>
 <script>
 
     layui.use('layer', function(){ //独立版的layer无需执行这一句
