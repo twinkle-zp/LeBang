@@ -18,7 +18,7 @@
     id, name, description, address, state, uid, flag, tid, num, likenum
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from resource
     where id = #{id,jdbcType=INTEGER}
@@ -28,12 +28,12 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.plat.entity.Resource" >
-    insert into resource (id, name, description, 
-      address, state, uid, 
+    insert into resource (id, name, description,
+      address, state, uid,
       flag, tid, num, likenum
       )
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
-      #{address,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, 
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR},
+      #{address,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER},
       #{flag,jdbcType=INTEGER}, #{tid,jdbcType=INTEGER}, #{num,jdbcType=INTEGER}, #{likenum,jdbcType=INTEGER}
       )
   </insert>
@@ -152,7 +152,7 @@
   </update>
 
   <select id="getTotalCount" resultType="int">
-    select count(id) from resource
+    select count(id) from resource where state=1
   </select>
 
   <select id="findPage" resultMap="BaseResultMap" parameterType="object">
@@ -172,6 +172,29 @@
     from resource r
     left join `user` u on u.uid=r.uid
     where r.state=1 and r.uid=#{param3}
+     limit #{param1},#{param2}
+  </select>
+
+  <select id="getAllCount" resultType="int">
+    select count(id) from resource
+  </select>
+
+  <select id="findAllPage" resultMap="BaseResultMap" parameterType="object">
+    select r.id, r.name, r.description, r.address, r.state, r.uid, r.flag, r.tid, r.num, r.likenum,u.name uname
+    from resource r
+    left join `user` u on u.uid=r.uid
+     limit #{param1},#{param2}
+  </select>
+
+  <select id="getTotalCountByName" resultType="int" parameterType="String">
+    select count(id) from resource where state=1 and name like #{name}
+  </select>
+
+  <select id="findPageByName" resultMap="BaseResultMap" parameterType="object">
+    select r.id, r.name, r.description, r.address, r.state, r.uid, r.flag, r.tid, r.num, r.likenum,u.name uname
+    from resource r
+    left join `user` u on u.uid=r.uid
+    where r.state=1 and r.name like #{param3}
      limit #{param1},#{param2}
   </select>
 </mapper>

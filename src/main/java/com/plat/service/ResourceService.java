@@ -13,4 +13,10 @@ public interface ResourceService {
     void addNum(Integer id);
 
     void delete(Integer valueOf);
+
+    Page findAllList(String currPage);
+
+    int updateResource(Resource resource);
+
+    Page findListByName(String name);
 }

@@ -24,4 +24,12 @@ public interface ResourceMapper {
     int getMyTotalCount(Integer uid);
 
     List<Resource> findMyPage(Integer beginRows, Integer pageSize,Integer uid);
+
+    int getAllCount();
+
+    List<Resource> findAllPage(Integer beginRows, Integer pageSize);
+
+    int getTotalCountByName(String name);
+
+    List<Resource> findPageByName(Integer beginRows, Integer pageSize, String name);
 }

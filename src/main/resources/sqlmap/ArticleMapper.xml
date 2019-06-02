@@ -11,12 +11,13 @@
     <result column="flag" property="flag" jdbcType="INTEGER" />
     <result column="img" property="img" jdbcType="VARCHAR" />
     <result column="tname" property="tname" jdbcType="VARCHAR" />
+    <result column="uname" property="uname" jdbcType="VARCHAR" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.plat.entity.Article" extends="BaseResultMap" >
     <result column="content" property="content" jdbcType="LONGVARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, uid, title, tid, time, num, flag, img, atype.name tname,
+    id, uid, title, tid, time, num, flag, img
   </sql>
   <sql id="Blob_Column_List" >
     content
@@ -157,7 +158,7 @@
   </update>
 
   <select id="getTotalCount" resultType="int">
-    select count(id) from article
+    select count(id) from article where flag=0
   </select>
 
   <select id="findPage" resultMap="ResultMapWithBLOBs" parameterType="object">
@@ -165,6 +166,7 @@
     a.id, a.uid, a.title, a.tid, a.time, a.num, a.flag, a.img, atype.name tname,a.content
      from article a
      left join article_type atype on atype.id=a.tid
+     where a.flag=0
      limit #{param1},#{param2}
   </select>
 
@@ -175,4 +177,17 @@
      left join article_type atype on atype.id=a.tid
      where a.id=#{id}
     </select>
+
+  <select id="getAllCount" resultType="int">
+    select count(id) from article
+  </select>
+
+  <select id="findAllPage" resultMap="ResultMapWithBLOBs" parameterType="object">
+    select
+    a.id, a.uid, a.title, a.tid, a.time, a.num, a.flag, a.img, atype.name tname,a.content,u.username uname
+     from article a
+     left join article_type atype on atype.id=a.tid
+     left join user u on u.uid=a.uid
+     limit #{param1},#{param2}
+  </select>
 </mapper>

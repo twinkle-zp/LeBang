@@ -69,4 +69,47 @@ public class ResourceServiceImpl implements ResourceService {
     public void delete(Integer valueOf) {
         resourceMapper.deleteByPrimaryKey(valueOf);
     }
+
+    @Override
+    public Page findAllList(String currPage) {
+        if(currPage==null)
+        {
+            currPage = "1";
+        }
+        Page result = new Page();
+        int totalCount = resourceMapper.getAllCount();
+        result.setTotalCount(totalCount);
+        result.setCurrPage(Integer.valueOf(currPage));
+        List<Resource> list = resourceMapper.findAllPage(result.getBeginRows(),result.getPageSize());
+        //获取文件后缀名
+        for(Resource r:list){
+            String fileTyle=r.getAddress().substring(r.getAddress().lastIndexOf("."),r.getAddress().length());
+            r.setSuffix(fileTyle);
+        }
+        result.setList(list);
+        return result;
+    }
+
+    @Override
+    public int updateResource(Resource resource) {
+        return resourceMapper.updateByPrimaryKeySelective(resource);
+    }
+
+    @Override
+    public Page findListByName(String name) {
+
+        Page result = new Page();
+        name="%"+name+"%";    //拼接查询字符串
+        int totalCount = resourceMapper.getTotalCountByName(name);
+        result.setTotalCount(totalCount);
+        result.setCurrPage(Integer.valueOf(1));
+        List<Resource> list = resourceMapper.findPageByName(result.getBeginRows(),result.getPageSize(),name);
+        //获取文件后缀名
+        for(Resource r:list){
+            String fileTyle=r.getAddress().substring(r.getAddress().lastIndexOf("."),r.getAddress().length());
+            r.setSuffix(fileTyle);
+        }
+        result.setList(list);
+        return result;
+    }
 }

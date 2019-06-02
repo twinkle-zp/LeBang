@@ -52,7 +52,7 @@ public class GoodsController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return "index";
+        return "redirect:/goods/findGoodList";
     }
 
     @RequestMapping("/findGoodList")
@@ -64,7 +64,7 @@ public class GoodsController {
         //model.addAttribute("page",page);
         User user = (User)request.getSession().getAttribute("user");
         request.setAttribute("userId",String.valueOf(user.getUid()));
-        return "goods";
+        return "jsp/goods";
     }
 
     @RequestMapping("/findGoodsById")
@@ -76,7 +76,7 @@ public class GoodsController {
         goods.setDateString(sdf.format(goods.getDate()));
         request.setAttribute("goods",goods);
         //model.addAttribute("page",page);
-        return "goods_info";
+        return "jsp/goods_info";
     }
 
     /**
@@ -96,7 +96,7 @@ public class GoodsController {
         //model.addAttribute("page",page);
 
         request.setAttribute("userId",String.valueOf(user.getUid()));
-        return "goods";
+        return "jsp/goods";
     }
 
     /**
@@ -128,7 +128,7 @@ public class GoodsController {
         request.setAttribute("userId",user.getUid());
         request.setAttribute("message",list);
         request.setAttribute("goodId",goodId);
-        return "contact";
+        return "jsp/contact";
     }
 
     /**
@@ -180,7 +180,7 @@ public class GoodsController {
         User user = (User)request.getSession().getAttribute("user");
         List<Message> messagesList = goodsService.findMessageList(user.getUid());
         request.setAttribute("messageList",messagesList);
-        return "messageList";
+        return "jsp/messageList";
     }
 
     /**
@@ -199,7 +199,66 @@ public class GoodsController {
         request.setAttribute("userId",user.getUid());
         request.setAttribute("message",list);
         request.setAttribute("goodId",goodId);
-        return "contact";
+        return "jsp/contact";
     }
 
+    /**
+     *  根据商品名模糊搜索
+     */
+    @RequestMapping("/searchByName")
+    public String searchByName(HttpServletRequest request, HttpServletResponse response, Model model){
+
+        String name = request.getParameter("searchString");
+        String currPage = request.getParameter("currPage");
+        Page page = goodsService.findListByName(name);
+        request.setAttribute("page",page);
+        //model.addAttribute("page",page);
+        User user = (User)request.getSession().getAttribute("user");
+        request.setAttribute("userId",String.valueOf(user.getUid()));
+        return "jsp/goods";
+    }
+
+    /**
+     * 后台管理获取全部商品列表
+     * @param request
+     * @param response
+     * @param model
+     * @return
+     */
+    @RequestMapping("/findAllList")
+    public String findAllList(HttpServletRequest request, HttpServletResponse response, Model model){
+
+        String currPage = request.getParameter("currPage");
+        Page page = goodsService.findAllList(currPage);
+        request.setAttribute("page",page);
+        //model.addAttribute("page",page);
+        return "system/goods-list";
+    }
+
+    /**
+     * 展示/禁止 商品
+     * @param request
+     * @param response
+     * @param model
+     * @return
+     */
+    @RequestMapping("/updateFlag")
+    public void updateFlag(HttpServletRequest request, HttpServletResponse response, Model model) {
+        String id = request.getParameter("id");
+        String flag = request.getParameter("flag");
+        goodsService.updateFlag(Integer.valueOf(id),Integer.valueOf(flag));
+    }
+
+    /**
+     * 管理员删除商品
+     * @param request
+     * @param response
+     * @param model
+     * @return
+     */
+    @RequestMapping("/deleteByAdmin")
+    public void deleteByAdmin(HttpServletRequest request, HttpServletResponse response, Model model){
+        String id = request.getParameter("id");
+        goodsService.deleteByAdmin(Integer.valueOf(id));
+    }
 }

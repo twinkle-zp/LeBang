@@ -19,4 +19,19 @@ public class DateUtils {
         }
         return null;
     }
+    //获取当前时间  yyyy-MM-dd HH:mm:ss
+    public Date convert(String datetime){
+        String date = datetime.substring(0,10);
+        String time = datetime.substring(12);
+        String newDatetime = date+" "+time+":00";
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+            Date dateTime = sdf.parse(newDatetime);
+            return sdf.parse(newDatetime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

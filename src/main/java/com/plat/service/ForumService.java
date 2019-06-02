@@ -22,4 +22,18 @@ public interface ForumService {
     void addComment(Integer article_id, String content, Integer uid);
 
     List<ArticleMulti> findMultiList(Integer comment_id);
+
+    Page findAllList(String currPage);
+
+    int updateArticle(Article article);
+
+    int deleteByAdmin(Integer id);
+
+    List<ArticleType> findAllType();
+
+    int deleteType(Integer id);
+
+    int addType(ArticleType articleType);
+
+    int addMulti(Integer comid, String content, Integer uid);
 }

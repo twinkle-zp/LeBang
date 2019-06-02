@@ -93,8 +93,26 @@
         <!--&lt;!&ndash; 国际化操作拦截器 如果采用基于（请求/Session/Cookie）则必需配置 &ndash;&gt;-->
         <!--<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" />-->
     <!--</mvc:interceptors>-->
+    <!--<mvc:interceptors>-->
+        <!--  <bean class="cn.lzc.interceptor.CustomInterceptor"></bean>--><!--拦截所有请求-->
+        <!--后台管理登录拦截器-->
+        <!--<mvc:interceptor>-->
+            <!--<mvc:mapping path="/admin/**"/>-->
+            <!--<mvc:exclude-mapping path="/admin/login"></mvc:exclude-mapping>-->
+            <!--<bean class="com.plat.intercepter.AdminLoginIntercepter"/>-->
+        <!--</mvc:interceptor>-->
+        <!--登录拦截器-->
+        <!--<mvc:interceptor>-->
+            <!--<mvc:mapping path="/**"/>-->
+            <!--&lt;!&ndash;<mvc:exclude-mapping path="/system/**"></mvc:exclude-mapping>&ndash;&gt;-->
+            <!--<bean class="com.plat.intercepter.LoginIntercepter"/>-->
+        <!--</mvc:interceptor>-->
+
+
+    <!--</mvc:interceptors>-->
+
     <!-- 定义无Controller的path<->view直接映射 -->
-     <mvc:view-controller path="/" view-name="redirect:/" />
+     <mvc:view-controller path="/" view-name="redirect:/user/loginUser" />
 
     <!-- 配置会话工厂SqlSessionFactory -->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">

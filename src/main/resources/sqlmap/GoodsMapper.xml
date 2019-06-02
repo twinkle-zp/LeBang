@@ -10,6 +10,7 @@
     <result column="date" property="date" jdbcType="DATE" />
     <result column="description" property="description" jdbcType="VARCHAR" />
     <result column="flag" property="flag" jdbcType="INTEGER" />
+    <result column="uname" property="uname" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, user_id, name, price, image, date, description, flag
@@ -127,7 +128,7 @@
   </update>
 
   <select id="getTotalCount" resultType="int">
-    select count(id) from goods
+    select count(id) from goods where flag=0
   </select>
 
   <select id="findPage" resultMap="BaseResultMap" parameterType="object">
@@ -135,11 +136,31 @@
   </select>
 
   <select id="getMyTotalCount" resultType="int" parameterType="int">
-    select count(id) from goods where user_id=#{uid}
+    select count(id) from goods where flag=0 and user_id=#{uid}
   </select>
 
   <select id="findMyPage" resultMap="BaseResultMap" parameterType="object">
     select <include refid="Base_Column_List" /> from goods where flag=0 and user_id=#{param3} limit #{param1},#{param2}
+  </select>
+
+  <select id="getAllCount" resultType="int">
+    select count(id) from goods
+  </select>
+
+  <select id="findAllPage" resultMap="BaseResultMap" parameterType="object">
+    select g.id, g.user_id, g.name, g.price, g.image, g.date, g.description, g.flag,u.username uname
+    from goods g
+    left join user u on u.uid=g.user_id
+    limit #{param1},#{param2}
+  </select>
+
+  <select id="getTotalCountByName" resultType="int" parameterType="String">
+    select count(id) from goods where flag=0 and name like #{name}
+  </select>
+
+  <select id="findPageByName" resultMap="BaseResultMap" parameterType="object">
+    select <include refid="Base_Column_List" /> from goods where flag=0 and name like #{param3}
+    limit #{param1},#{param2}
   </select>
 
 </mapper>

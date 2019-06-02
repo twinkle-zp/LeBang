@@ -24,4 +24,8 @@ public interface ArticleMapper {
     List<Article> findPage(Integer beginRows, Integer pageSize);
 
     Article findDetail(Integer id);
+
+    int getAllCount();
+
+    List<Article> findAllPage(Integer beginRows, Integer pageSize);
 }

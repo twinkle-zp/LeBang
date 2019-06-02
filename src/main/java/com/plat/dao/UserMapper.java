@@ -2,6 +2,8 @@ package com.plat.dao;
 
 import com.plat.entity.User;
 
+import java.util.List;
+
 public interface UserMapper {
     int deleteByPrimaryKey(Integer uid);
 
@@ -16,4 +18,9 @@ public interface UserMapper {
     int updateByPrimaryKey(User record);
 
     User findByUsername(String name);
+
+
+    int getAllCount();
+
+    List<User> findAllPage(Integer beginRows, Integer pageSize);
 }

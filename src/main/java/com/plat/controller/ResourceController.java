@@ -68,9 +68,16 @@ public class ResourceController {
         String currPage = request.getParameter("currPage");//获取当前页
         Page page = resourceService.findList(currPage);
         request.setAttribute("page",page);
-        return "resource";
+        return "jsp/resource";
     }
 
+    @RequestMapping("/searchByName")
+    public String searchByName(HttpServletRequest request, HttpServletResponse response){
+        String name = request.getParameter("searchString");
+        Page page = resourceService.findListByName(name);
+        request.setAttribute("page",page);
+        return "jsp/resource";
+    }
     @RequestMapping("/download")
     public ResponseEntity<byte[]> fileDownLoad(HttpServletRequest request) throws Exception{
         String address = request.getParameter("address");
@@ -97,7 +104,7 @@ public class ResourceController {
         User user = (User)request.getSession().getAttribute("user");
         Page page = resourceService.findMyList(currPage,user.getUid());
         request.setAttribute("page",page);
-        return "resource_my";
+        return "jsp/resource_my";
     }
 
     @RequestMapping("/delete")
@@ -121,5 +128,65 @@ public class ResourceController {
         }
         resourceService.delete(Integer.valueOf(id));
         return "redirect:/resource/myResource";
+    }
+
+    @RequestMapping("/findAllList")
+    public String findAllList(HttpServletRequest request, HttpServletResponse response){
+        String currPage = request.getParameter("currPage");//获取当前页
+        Page page = resourceService.findAllList(currPage);
+        request.setAttribute("page",page);
+        return "system/resource-list";
+    }
+
+    /**
+     * 管理员审核资源
+     */
+    @ResponseBody
+    @RequestMapping("/updateState")
+    public FlagUtils updateFlag(HttpServletRequest request, HttpServletResponse response, Model model){
+        String id = request.getParameter("id");//获取当前页
+        String state = request.getParameter("state");
+        FlagUtils flagUtils = new FlagUtils();
+        Resource resource = new Resource();
+        resource.setId(Integer.valueOf(id));
+        if(Integer.valueOf(state)==0)
+        {
+            resource.setState(1);
+        }
+        else
+        {
+            resource.setState(0);
+        }
+        flagUtils.setFlag(resourceService.updateResource(resource));
+        return flagUtils;
+    }
+
+    /**
+     * 管理员删除帖子
+     */
+    @ResponseBody
+    @RequestMapping("/deleteByAdmin")
+    public FlagUtils deleteByAdmin(HttpServletRequest request, HttpServletResponse response, Model model){
+        FlagUtils flagUtils = new FlagUtils();
+        String id = request.getParameter("id");//获取当前页
+        String address = request.getParameter("address");
+        String filePath = request.getSession().getServletContext().getRealPath("/"+address); //得到文件所在位置
+        File file = new File(filePath);
+        if (!file.exists()) {
+            System.out.println("删除文件失败:" + filePath + "不存在！");
+            flagUtils.setFlag(0);
+        }
+        else {
+            if(file.delete()){
+                System.out.println("删除单个文件" + filePath + "成功！");
+            }
+            else {
+                System.out.println("删除单个文件" + filePath + "失败！");
+                flagUtils.setFlag(0);
+            }
+        }
+        resourceService.delete(Integer.valueOf(id));
+        flagUtils.setFlag(1);
+        return flagUtils;
     }
 }

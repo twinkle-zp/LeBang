@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Controller
@@ -69,7 +68,7 @@ public class ActivityController {
         String currPage = request.getParameter("currPage");//获取当前页
         Page page = activityService.findList(currPage);
         request.setAttribute("page",page);
-        return "activity";
+        return "jsp/activity";
 
     }
 
@@ -84,7 +83,7 @@ public class ActivityController {
     public String joinPage(HttpServletRequest request, HttpServletResponse response, Model model){
         String activityId = request.getParameter("activityId");
         request.setAttribute("activityId",activityId);
-        return "join_activity";
+        return "jsp/join_activity";
     }
     /**
      * 提交报名表
@@ -123,37 +122,29 @@ public class ActivityController {
         User user = (User) request.getSession().getAttribute("user");
         List<ActivityJoin> activityJoinList = activityService.findMyJoin(user.getUid());
         request.setAttribute("activityJoinList",activityJoinList);
-        return "my_join_activity";
+        return "jsp/my_join_activity";
     }
 
     /**
      * 查找当前用户已发起的所有活动
-     * @param request
-     * @param response
-     * @param model
-     * @return
      */
     @RequestMapping("/myActivity")
     public String myActivity(HttpServletRequest request, HttpServletResponse response, Model model){
         User user = (User) request.getSession().getAttribute("user");
         List<Activity> activityList = activityService.findMyActivity(user.getUid());
         request.setAttribute("activityList",activityList);
-        return "my_activity";
+        return "jsp/my_activity";
     }
 
     /**
      * 查找当前活动的报名列表
-     * @param request
-     * @param response
-     * @param model
-     * @return
      */
     @RequestMapping("/joinList")
     public String joinList(HttpServletRequest request, HttpServletResponse response, Model model){
         String activityId = request.getParameter("activityId");
         List<ActivityJoin> activityJoinList = activityService.findJoinList(Integer.valueOf(activityId));
         request.setAttribute("activityJoinList",activityJoinList);
-        return "activity_join_check";
+        return "jsp/activity_join_check";
     }
 
     /**

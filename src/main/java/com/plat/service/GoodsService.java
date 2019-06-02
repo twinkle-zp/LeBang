@@ -24,4 +24,12 @@ public interface GoodsService {
     List<Message> findMessageList(Integer uid);
 
     List<Message> findUserMessage(Integer goodId, Integer uid, Integer toUserId);
+
+    Page findAllList(String currPage);
+
+    void updateFlag(Integer id, Integer flag);
+
+    void deleteByAdmin(Integer id);
+
+    Page findListByName(String name);
 }

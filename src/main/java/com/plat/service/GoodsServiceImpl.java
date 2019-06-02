@@ -124,4 +124,55 @@ public class GoodsServiceImpl implements GoodsService {
     public List<Message> findUserMessage(Integer goodId, Integer uid, Integer toUserId) {
         return messageMapper.findUserMessage(goodId,uid,toUserId);
     }
+
+    public Page findAllList(String currPage) {
+        if(currPage==null)
+        {
+            currPage = "1";
+        }
+        Page result = new Page();
+        int totalCount = goodsMapper.getAllCount();
+
+        result.setTotalCount(totalCount);
+        result.setCurrPage(Integer.valueOf(currPage));
+
+        List<Goods> list = goodsMapper.findAllPage(result.getBeginRows(),result.getPageSize());
+        for(Goods g : list){
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            g.setDateString(sdf.format(g.getDate()));
+        }
+        result.setList(list);
+        return result;
+    }
+
+    public void updateFlag(Integer id, Integer flag) {
+        Goods goods = new Goods();
+        goods.setId(id);
+        if(flag==0){
+            goods.setFlag(1);
+            goodsMapper.updateByPrimaryKeySelective(goods);
+        }
+        else
+        {
+            goods.setFlag(0);
+            goodsMapper.updateByPrimaryKeySelective(goods);
+        }
+    }
+
+    public void deleteByAdmin(Integer id) {
+        goodsMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public Page findListByName(String name) {
+        Page result = new Page();
+        name="%"+name+"%";    //拼接查询字符串
+        int totalCount = goodsMapper.getTotalCountByName(name);
+        result.setTotalCount(totalCount);
+        result.setCurrPage(Integer.valueOf(1));
+
+        List<Goods> list = goodsMapper.findPageByName(result.getBeginRows(),result.getPageSize(),name);
+        result.setList(list);
+        return result;
+    }
 }

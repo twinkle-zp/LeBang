@@ -1,12 +1,14 @@
 package com.plat.service;
 
 import com.plat.dao.UserMapper;
+import com.plat.entity.Page;
 import com.plat.entity.User;
-import com.plat.util.MailUtils;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -51,4 +53,44 @@ public class UserServiceImpl implements UserService {
         return 2;
 
     }
+
+    public Page findListByAdmin(String currPage) {
+        if(currPage==null)
+        {
+            currPage = "1";
+        }
+        Page result = new Page();
+        int totalCount = userMapper.getAllCount();
+
+        result.setTotalCount(totalCount);
+        result.setCurrPage(Integer.valueOf(currPage));
+
+        List<User> list = userMapper.findAllPage(result.getBeginRows(),result.getPageSize());
+        result.setList(list);
+        return result;
+    }
+
+    public void updateState(Integer uid, Integer state) {
+        User user = new User();
+        user.setUid(uid);
+        if(state==0){
+            user.setState(1);
+            userMapper.updateByPrimaryKeySelective(user);
+        }
+        else
+        {
+            user.setState(0);
+            userMapper.updateByPrimaryKeySelective(user);
+        }
+    }
+
+    public void delete(Integer uid) {
+        userMapper.deleteByPrimaryKey(uid);
+    }
+
+    public void update(User user) {
+        userMapper.updateByPrimaryKeySelective(user);
+    }
+
+
 }

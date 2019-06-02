@@ -153,4 +153,12 @@
   <select id="findByUsername" parameterType="String" resultType="com.plat.entity.User">
     select  <include refid="Base_Column_List"/> from user where username = #{username}
   </select>
+
+  <select id="getAllCount" resultType="int">
+    select count(uid) from user
+  </select>
+
+  <select id="findAllPage" resultMap="BaseResultMap" parameterType="object">
+    select <include refid="Base_Column_List" /> from user limit #{param1},#{param2}
+  </select>
 </mapper>

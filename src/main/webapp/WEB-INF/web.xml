@@ -55,7 +55,7 @@
 </context-param>
 <!-- 欢迎页面-->
 <welcome-file-list>
-  <welcome-file>/login.jsp</welcome-file>
+  <welcome-file>/jsp/login.jsp</welcome-file>
 </welcome-file-list>
 <!--404错误展示页面，可自行配置-->
 <!--<error-page>-->

@@ -1490,3 +1490,17 @@ section
 	border-bottom: none;
 	background: url("../images/like.png") no-repeat 6px 8px;
 }
+
+.ulcard {
+    width: 1200px;
+    display: flex !important;
+    flex-wrap: wrap;
+
+}
+.service{
+    box-shadow: 5px 5px 16px 0px rgba(0,0,0,0.75);
+
+    padding: 10px;
+    margin: 20px;
+
+}

@@ -9,6 +9,7 @@ import com.plat.util.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Service
@@ -69,10 +70,73 @@ public class ForumServiceImpl implements ForumService {
         DateUtils dateUtils = new DateUtils();
         articleComment.setTime(dateUtils.getNowTime());
         articleCommentMapper.insert(articleComment);
+        Article article = new Article();
+        article = articleMapper.selectByPrimaryKey(article_id);
+        article.setNum(article.getNum()+1);
+        articleMapper.updateByPrimaryKeySelective(article);
     }
 
     public List<ArticleMulti> findMultiList(Integer comment_id) {
         List<ArticleMulti> articleMultiList = articleMultiMapper.findMultiByCid(comment_id);
         return articleMultiList;
+    }
+
+    public Page findAllList(String currPage) {
+        if(currPage==null)
+        {
+            currPage = "1";
+        }
+        Page result = new Page();
+        int totalCount = articleMapper.getAllCount();
+
+        result.setTotalCount(totalCount);
+        result.setCurrPage(Integer.valueOf(currPage));
+
+        List<Article> list = articleMapper.findAllPage(result.getBeginRows(),result.getPageSize());
+        for (Article a : list)
+        {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            a.setDateString(sdf.format(a.getTime()));
+        }
+        result.setList(list);
+        return result;
+    }
+
+    public int updateArticle(Article article) {
+        return articleMapper.updateByPrimaryKeySelective(article);
+    }
+
+    public int deleteByAdmin(Integer id) {
+        return articleMapper.deleteByPrimaryKey(id);
+    }
+
+    public List<ArticleType> findAllType() {
+        List<ArticleType> articleTypeList = articleTypeMapper.findAll();
+        return articleTypeList;
+    }
+
+    public int deleteType(Integer id) {
+        return articleTypeMapper.deleteByPrimaryKey(id);
+    }
+
+    public int addType(ArticleType articleType) {
+        return articleTypeMapper.insert(articleType);
+    }
+
+    @Override
+    public int addMulti(Integer comid, String content, Integer uid) {
+        ArticleMulti articleMulti = new ArticleMulti();
+        articleMulti.setComid(comid);
+        articleMulti.setContent(content);
+        articleMulti.setFlag(0);
+        articleMulti.setUid(uid);
+        DateUtils dateUtils = new DateUtils();
+        articleMulti.setTime(dateUtils.getNowTime());
+        int flag = articleMultiMapper.insert(articleMulti);
+
+        ArticleComment articleComment = articleCommentMapper.selectByPrimaryKey(comid);
+        articleComment.setNum(articleComment.getNum()+1);    //一级评论下的二级评论数加一
+        articleCommentMapper.updateByPrimaryKey(articleComment);
+        return flag;
     }
 }

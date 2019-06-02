@@ -23,6 +23,26 @@ public class Article {
 
     private String tname;
 
+    private String uname;
+
+    private String dateString;
+
+    public String getDateString() {
+        return dateString;
+    }
+
+    public void setDateString(String dateString) {
+        this.dateString = dateString;
+    }
+
+    public String getUname() {
+        return uname;
+    }
+
+    public void setUname(String uname) {
+        this.uname = uname;
+    }
+
     public String getTname() {
         return tname;
     }
